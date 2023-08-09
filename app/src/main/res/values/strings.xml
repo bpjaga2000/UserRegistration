@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">UserRegistration</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="region">Region</string>
+    <string name="log_in">Log In</string>
+    <string name="register">Register</string>
+    <string name="ok">OK</string>
+    <string name="logged_in_successfully">Logged In Successfully!</string>
+    <string name="log_out">Log Out</string>
+    <string name="re_enter_password">Re-Enter Password</string>
+    <string name="register_sign_up">Register/Sign Up</string>
+</resources>
