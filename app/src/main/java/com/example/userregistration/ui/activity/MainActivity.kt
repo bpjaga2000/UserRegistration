@@ -1,12 +1,14 @@
 package com.example.userregistration.ui.activity
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.userregistration.R
 import com.example.userregistration.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), SwitchFragments {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModel()
@@ -22,10 +24,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
+    override fun moveToRegister() {
+        val navFragment = supportFragmentManager.findFragmentById(R.id.loginFragment)
+        val navController = navFragment?.findNavController()
+        val graph = navController?.graph
+        graph?.setStartDestination(R.id.registerFragment)
+        navController?.setGraph(graph!!, null)
+    }
 
-            else -> {}
-        }
+    override fun moveToLogIn() {
+        val navController = findNavController(this.binding.fragContainer.id)
+        val graph = navController.graph
+        graph.setStartDestination(R.id.loginFragment)
+        navController.setGraph(graph, null)
     }
 }

@@ -8,27 +8,26 @@ import com.example.userregistration.db.UserRegistrationDb
 import com.example.userregistration.db.entities.RegionEntity
 import com.example.userregistration.db.entities.UserEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 class AppRepository(
     private val api: ApiService,
     private val db: UserRegistrationDb
 ) : Repository {
-    override suspend fun getData(): Flow<Envelope<BaseBean>> = flow {
+    override suspend fun getData(): Flow<Envelope<BaseBean>> = flow<Envelope<BaseBean>> {
         emit(Envelope.loading())
-        try {
-            val response = api.getData()
-            if (response.isSuccessful)
-                response.body()?.let {
-                    emit(Envelope.success(it))
-                }
-            else
-                response.errorBody()?.let {
-                    emit(Envelope.error(ErrorModel(errorCode = response.code())))
-                }
-        } catch (e: Exception) {
-            emit(Envelope.error(ErrorModel(503, e.message ?: "")))
-        }
+        val response = api.getData()
+        if (response.isSuccessful)
+            response.body()?.let {
+                emit(Envelope.success(it))
+            }
+        else
+            response.errorBody()?.let {
+                emit(Envelope.error(ErrorModel(errorCode = response.code())))
+            }
+    }.catch {
+        emit(Envelope.error(ErrorModel(503, it.message.orEmpty())))
     }
 
     override suspend fun addData(list: List<RegionEntity>) {

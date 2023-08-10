@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface AppDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRegions(list: List<RegionEntity>)
+    fun insertRegions(list: List<RegionEntity>)
 
     @Query("Select * from regions")
     fun fetchRegions(): Flow<List<RegionEntity>?>
@@ -21,7 +21,7 @@ interface AppDao {
     fun checkUserName(userName: String): Flow<Int?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addUser(userEntity: UserEntity)
+    fun addUser(userEntity: UserEntity)
 
     @Query("Select * from users where userName = :userName and password = :password")
     fun verifyUser(userName: String, password: String): Flow<UserEntity?>

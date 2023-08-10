@@ -1,6 +1,7 @@
 package com.example.userregistration.ui.activity.fragments
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.userregistration.R
-import com.example.userregistration.Utils.collectLatestFlow
 import com.example.userregistration.databinding.FragmentLoginBinding
 import com.example.userregistration.ui.activity.MainViewModel
+import com.example.userregistration.utils.InputFilters
+import com.example.userregistration.utils.collectLatestFlow
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class LoginFragment : Fragment() {
@@ -26,7 +28,6 @@ class LoginFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.model = viewModel
-        viewModel.resetModels()
         viewModel.toolBarText.set(getString(R.string.log_in))
 
         viewModel.userName.observe(viewLifecycleOwner) {
@@ -39,17 +40,35 @@ class LoginFragment : Fragment() {
 
         collectLatestFlow(viewModel.logIn) {
             it?.let {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLogoutFragment())
-            } ?: Toast.makeText(requireContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show()
+                if (it.userName.isBlank())
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.invalid_credentials), Toast.LENGTH_SHORT
+                    ).show()
+                else if (findNavController().currentDestination?.id == R.id.loginFragment)
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLogoutFragment())
+            }
         }
 
-        binding.register.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLoginFragment())
-        }
+        with(binding) {
+            register.setOnClickListener {
+                if (findNavController().currentDestination?.id == R.id.loginFragment)
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+            }
 
-        binding.logIn.setOnClickListener {
-            viewModel.logInUser()
+            logIn.setOnClickListener {
+                viewModel.logInUser()
+            }
+
+            userName.filters = arrayOf(InputFilters.usernameFilter, InputFilter.LengthFilter(32))
+            password.filters = arrayOf(InputFilters.passwordFilter, InputFilter.LengthFilter(32))
+
+            return binding.root
         }
-        return binding.root
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.resetModels()
     }
 }

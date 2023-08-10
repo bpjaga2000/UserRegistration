@@ -42,7 +42,8 @@
                 style="@style/ThemeOverlay.Material3.TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/user_name" />
+                android:hint="@string/user_name"
+                android:text="@={model.userName}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -51,6 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_medium"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/TextAppearance.Material3.LabelMedium"
+            app:passwordToggleEnabled="true"
             app:layout_constraintTop_toBottomOf="@id/userNameTil">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -59,24 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/reenterPasswordTil"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_medium"
-            app:layout_constraintTop_toBottomOf="@id/passwordTil">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reenterPassword"
-                style="@style/ThemeOverlay.Material3.TextInputEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/re_enter_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={model.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -85,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_medium"
-            app:layout_constraintTop_toBottomOf="@id/reenterPasswordTil">
+            app:layout_constraintTop_toBottomOf="@id/passwordTil">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/region"
@@ -99,6 +87,7 @@
             android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="@{model.isEnabled}"
             android:layout_margin="@dimen/space_medium"
             android:text="@string/register"
             app:layout_constraintTop_toBottomOf="@id/regionTil" />

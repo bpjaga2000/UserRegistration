@@ -24,11 +24,16 @@ class LogoutFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentLogoutBinding.inflate(inflater, container, false)
         binding.model = viewModel
-        viewModel.resetModels()
         viewModel.toolBarText.set(getString(R.string.log_out))
+        viewModel.isEnabled.set(true)
         binding.logOut.setOnClickListener {
-            findNavController().navigate(LogoutFragmentDirections.actionLogoutFragmentToLoginFragment())
+            findNavController().navigateUp()
         }
         return binding.root
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.resetModels()
     }
 }

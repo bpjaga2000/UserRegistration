@@ -1,4 +1,4 @@
-package com.example.userregistration.Utils
+package com.example.userregistration.utils
 
 import android.util.Base64
 import java.security.Key

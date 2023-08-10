@@ -10,9 +10,9 @@ data class UserEntity(
     @ColumnInfo("id")
     var id: Int = 0,
     @ColumnInfo("userName")
-    var userName: String,
+    var userName: String = "",
     @ColumnInfo("password")
-    var password: String,
+    var password: String = "",
     @ColumnInfo("regionCode")
-    var regionCode: String
+    var regionCode: String = ""
 )

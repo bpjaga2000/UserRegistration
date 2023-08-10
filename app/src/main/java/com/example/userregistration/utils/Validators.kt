@@ -1,4 +1,4 @@
-package com.example.userregistration.Utils
+package com.example.userregistration.utils
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -8,10 +8,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.security.SecureRandom
+import java.util.regex.Pattern
 
 fun String.isUserNameValid(): Boolean = this.length in 4..16
 
-fun String.isPasswordValid(): Boolean = this.length in 4..32
+fun String.isPasswordValidForLogIn(): Boolean = this.length in 8..32
+fun String.isPasswordValidForRegistration(): Boolean = this.length in 8..32 &&
+        Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[!@#$%&()]).{8,}$")
+            .matcher(this).matches()
 
 fun generateRandomBytes(size: Int): ByteArray =
     ByteArray(size).apply {

@@ -10,4 +10,10 @@
     <string name="log_out">Log Out</string>
     <string name="re_enter_password">Re-Enter Password</string>
     <string name="register_sign_up">Register/Sign Up</string>
+    <string name="invalid_credentials">Invalid Credentials</string>
+    <string name="password_needs_to_have_atleast_one_number">Password needs to have at least one number</string>
+    <string name="password_needs_to_have_atleast_one_lower_case">Password needs to have at least one lower case letter</string>
+    <string name="password_needs_to_have_atleast_one_upper_case">Password needs to have at least one upper case letter</string>
+    <string name="password_needs_to_have_atleast_one_special_character">Password needs to have at least one of \'!@#$%&amp;()\'</string>
+    <string name="password_needs_to_have_atleast_8_characters">Password needs to have at least 8 characters</string>
 </resources>
